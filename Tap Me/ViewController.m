@@ -26,4 +26,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)buttonPressed
+{
+    scoreLabel.text = @"Pressed";
+//    NSLog(@"Pressed");
+}
+
 @end

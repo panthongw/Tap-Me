@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
+{
+    IBOutlet UILabel *timerLabel;
+    IBOutlet UILabel *scoreLabel;
+}
+
+- (IBAction)buttonPressed;
 
 @end
