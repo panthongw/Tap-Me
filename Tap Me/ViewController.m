@@ -14,10 +14,33 @@
 
 @implementation ViewController
 
+- (AVAudioPlayer *)setupAudioPlayerWithFile:(NSString *)file type:(NSString *)type
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:file ofType:type];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    
+    NSError *error;
+    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    
+    if (!audioPlayer) {
+        NSLog(@"%@", [error description]);
+    }
+    
+    return audioPlayer;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_tile.png"]];
+    scoreLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"field_score.png"]];
+    timerLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"field_time.png"]];
+    
+    buttonBeep = [self setupAudioPlayerWithFile:@"ButtonTap" type:@"wave"];
+    secondBeep = [self setupAudioPlayerWithFile:@"SecondBeep" type:@"wave"];
+    backgroundMusic = [self setupAudioPlayerWithFile:@"HallOfTheMountainKing" type:@"mp3"];
     
     [self setupGame];
 }
@@ -70,7 +93,8 @@
 {
     count++;
     scoreLabel.text = [NSString stringWithFormat:@"Score\n%li", (long)count];
-    NSLog(@"Pressed and count is %li", (long)count);
+    [buttonBeep play];
+    // NSLog(@"Pressed and count is %li", (long)count);
 }
 
 @end
